@@ -267,7 +267,8 @@ SWITCH
         .text
         .align  2
 
-        .globl  _ThreadRoot
+        //.globl  _ThreadRoot
+        .globl  ThreadRoot
 
 /* void ThreadRoot( void )
 **
@@ -277,7 +278,7 @@ SWITCH
 **      esi     points to thread function
 **      edi     point to Thread::Finish()
 */
-_ThreadRoot:
+ThreadRoot:
         pushl   %ebp
         movl    %esp,%ebp
         pushl   InitialArg
@@ -305,8 +306,8 @@ _ThreadRoot:
 */
         .comm   _eax_save,4
 
-        .globl  _SWITCH
-_SWITCH:
+        .globl  SWITCH
+SWITCH:
         movl    %eax,_eax_save          # save the value of eax
         movl    4(%esp),%eax            # move pointer to t1 into eax
         movl    %ebx,_EBX(%eax)         # save registers

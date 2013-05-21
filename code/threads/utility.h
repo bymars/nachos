@@ -27,7 +27,9 @@
 
 // Miscellaneous useful routines
 
-#include <bool.h>
+// #include <bool.h>
+#define TRUE true
+#define FALSE false
 					 	// Boolean values.  
 						// This is the same definition 
 						// as in the g++ library.

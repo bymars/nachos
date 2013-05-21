@@ -17,7 +17,11 @@
 #ifdef HOST_SPARC
 #include <stdarg.h>
 #else
+#ifdef HOST_i386
+#include <stdarg.h>
+#else
 #include "/usr/include/stdarg.h"
+#endif
 #endif
 #endif
 

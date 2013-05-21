@@ -1,0 +1,7 @@
+*.o
+code/*/core
+code/*/nachos
+code/*/DISK
+code/*/swtch.s
+code/test/*.coff
+code/bin/coff2noff
