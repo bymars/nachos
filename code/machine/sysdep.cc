@@ -27,6 +27,9 @@
 
 extern "C" {
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
 #include <string.h>
 #include <signal.h>
 #include <sys/types.h>
@@ -49,8 +52,8 @@ extern "C" {
 // int creat(char *name, unsigned short mode);
 // int open(const char *name, int flags, ...);
 #else
-int creat(const char *name, unsigned short mode);
-int open(const char *name, int flags, ...);
+// int creat(const char *name, unsigned short mode);
+// int open(const char *name, int flags, ...);
 // void signal(int sig, VoidFunctionPtr func); -- this may work now!
 #ifdef HOST_i386
 int select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
@@ -61,13 +64,13 @@ int select(int numBits, void *readFds, void *writeFds, void *exceptFds,
 #endif
 #endif
 
-int unlink(char *name);
-int read(int filedes, char *buf, int numBytes);
-int write(int filedes, char *buf, int numBytes);
-int lseek(int filedes, int offset, int whence);
+// int unlink(char *name);
+// int read(int filedes, char *buf, int numBytes);
+// int write(int filedes, char *buf, int numBytes);
+// int lseek(int filedes, int offset, int whence);
 int tell(int filedes);
 int close(int filedes);
-int unlink(char *name);
+// int unlink(char *name);
 
 // definition varies slightly from platform to platform, so don't 
 // define unless gcc complains
@@ -79,13 +82,13 @@ void srand(unsigned seed);
 int rand(void);
 unsigned sleep(unsigned);
 void abort();
-void exit();
-int mprotect(char *addr, int len, int prot);
+// void exit();
+// int mprotect(char *addr, int len, int prot);
 
 int socket(int, int, int);
-int bind (int, const void*, int);
-int recvfrom (int, void*, int, int, void*, int *);
-int sendto (int, const void*, int, int, void*, int);
+// int bind (int, const void*, int);
+// int recvfrom (int, void*, int, int, void*, int *);
+// int sendto (int, const void*, int, int, void*, int);
 }
 
 #include "interrupt.h"
@@ -351,7 +354,7 @@ ReadFromSocket(int sockID, char *buffer, int packetSize)
     int size = sizeof(uName);
    
     retVal = recvfrom(sockID, buffer, packetSize, 0,
-				   (struct sockaddr *) &uName, &size);
+				   (struct sockaddr *) &uName, (socklen_t *) &size);
 
     if (retVal != packetSize) {
         perror("in recvfrom");
@@ -373,7 +376,7 @@ SendToSocket(int sockID, char *buffer, int packetSize, char *toName)
 
     InitSocketName(&uName, toName);
     retVal = sendto(sockID, buffer, packetSize, 0,
-			  (char *) &uName, sizeof(uName));
+			  (const sockaddr*) &uName, sizeof(uName));
     ASSERT(retVal == packetSize);
 }
 
