@@ -4,4 +4,8 @@ code/*/nachos
 code/*/DISK
 code/*/swtch.s
 code/test/*.coff
+code/test/halt
+code/test/matmult
+code/test/shell
+code/test/sort
 code/bin/coff2noff
